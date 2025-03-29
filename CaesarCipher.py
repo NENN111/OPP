@@ -23,6 +23,6 @@ class CaesarCipher:
                 a+=stroka[i]
         return a
 cipher = CaesarCipher(5)
-
+print(1)
 print(cipher.encode('Beegeek'))      # Gjjljjp
 print(cipher.decode('Gjjljjp')) 
