@@ -1,0 +1,48 @@
+from collections.abc import Sequence,Iterable
+class SortedList(Sequence):
+    def __init__(self,iterable=[]):
+        self._iterable = list(sorted(iterable))
+    def __len__(self):
+        return len(self._iterable)
+    def __getitem__(self,k):
+        return self._iterable[k]
+    def __delitem__(self,k):
+        del self._iterable[k]
+    def __setitem__(self,k,v):
+        raise NotImplementedError
+    def add(self,k):
+        self._iterable = sorted(list(self._iterable)+[k])
+    def discard(self,k):
+        while k in self._iterable:
+            self._iterable.remove(k)
+        self._iterable = sorted(self._iterable)
+    def update(self,k):
+        self._iterable = sorted(self._iterable+k)
+    def __repr__(self):
+        return f"SortedList({list([i for i in self._iterable])})"
+    def __getattribute__(self, attr):
+        if attr in ['append', 'insert', 'extend', 'reverse']:
+            raise NotImplementedError
+        return object.__getattribute__(self, attr)
+    def __reversed__(self):
+        raise NotImplementedError
+    def __append__(self):
+        raise NotImplementedError
+    def __add__(self,other):
+        if isinstance(other,SortedList):
+            return SortedList(list(self._iterable) + list(other))
+        return NotImplemented
+    def __iadd__(self,other):
+        if isinstance(other,SortedList):
+            self._iterable = sorted(self._iterable + list(other))
+            return self
+        return NotImplemented
+    def __mul__(self,n):
+        if isinstance(n,int):
+            return SortedList(list(self._iterable)*n) 
+        return NotImplemented
+    def __imul__(self,n):
+        if isinstance(n,int):
+            self._iterable = sorted(self._iterable * n)
+            return self
+        return NotImplemented
