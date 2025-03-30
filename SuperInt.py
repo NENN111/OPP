@@ -1,0 +1,17 @@
+class SuperInt(int):
+    def repeat(self,n=2):
+        if self<0:
+            return SuperInt("-"+str(self)[1:]*n)
+        return SuperInt(str(self)*n)
+    def next(self):
+        return SuperInt(self+1)
+    def prev(self):
+        return SuperInt(self-1)
+    def to_bin(self):
+        if self<0:
+            return SuperInt("-"+bin(int(str(self)[1:]))[2:]) 
+        return SuperInt(bin(self)[2:])
+    def __iter__(self):
+        if self<0:
+            return map(SuperInt,str(self)[1:])
+        return map(SuperInt,str(self))
